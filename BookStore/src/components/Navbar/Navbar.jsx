@@ -56,6 +56,7 @@ const profileMenuItems = [
 
 function ProfileMenu() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   console.log(isLoggedIn);
   
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -129,6 +130,7 @@ const navListItems = [
 
 function NavList() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const role = useSelector((state) => state.auth.role);
   const currentPath = window.location.pathname;
   const [activePage, setActivePage] = React.useState(currentPath);
 

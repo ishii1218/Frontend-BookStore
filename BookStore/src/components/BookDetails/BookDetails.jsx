@@ -46,6 +46,14 @@ const BookDetails = () => {
            'http://localhost:1000/addToCart',{},{headers}
         );
         alert(response.data.message);
+        console.log('response',response);
+
+
+        await axios.post(
+            'http://localhost:1000/updateOrder', {},
+
+            { headers }
+        );
     }
 
     return (

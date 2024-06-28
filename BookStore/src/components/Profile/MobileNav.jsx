@@ -17,10 +17,15 @@ import {
     PowerIcon,
 } from "@heroicons/react/24/solid";
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MobileNav = () => {
+    const role = useSelector((state) => state.auth.role);
+
   return (
-    <div className='w-full h-14 px-2 flex items-center justify-between text-green-100 bg-[#08312a]'>
+<>
+    {role === 'user' && (
+        <div className='w-full h-14 px-2 flex items-center justify-between text-green-100 bg-[#08312a]'>
         <Link to='/profile'>
                     <ListItem className='hover:text-[#08312a] '>
                         <ListItemPrefix>
@@ -51,6 +56,33 @@ const MobileNav = () => {
                     </ListItem>
                 </Link>
     </div>
+    )}
+    {role === 'admin' && (
+        <div className='w-full h-14 px-2 flex items-center justify-center gap-24 grid-cols-2 text-green-100 bg-[#08312a]'>
+        <Link to='/profile/status'>
+                    <ListItem className='hover:text-[#08312a] '>
+                        <ListItemPrefix>
+                            <PresentationChartBarIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Status
+                        <ListItemSuffix>
+                        </ListItemSuffix>
+                    </ListItem>
+                </Link>
+                <Link to='/profile/addbook'>
+                    <ListItem className='hover:text-[#08312a] '>
+                        <ListItemPrefix>
+                            <ShoppingBagIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Add Book
+                        <ListItemSuffix>
+                        </ListItemSuffix>
+                    </ListItem>
+                </Link>
+        </div>
+    )}
+</>
+
   )
 }
 

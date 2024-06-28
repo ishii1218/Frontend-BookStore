@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Favorites from './components/Profile/Favorites';
 import Status from './components/Profile/Status';
 import Settings from './components/Profile/Settings';
+import Summary from './pages/Summary';
+import AddBook from './pages/AddBook';
  
 
 const App = () => {
@@ -45,7 +47,11 @@ const App = () => {
           <Route  path="/collection" element={<Collection />} />
           <Route  path="/book-details/:id" element={<BookDetails />} />
           <Route  path="/profile" element={<Profile />} >
-            <Route  index element={<Favorites />} />
+            {role === 'user' ? <Route  index element={<Favorites />} /> 
+              : <Route  index element={<Summary />} />
+            }
+            {role === 'admin' && <Route  path="/profile/addbook" element={<AddBook />} />}
+            
             <Route  path="/profile/status" element={<Status />} />
             <Route  path="/profile/settings" element={<Settings />} />
           </Route>	

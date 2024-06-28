@@ -17,6 +17,10 @@ const Collection = () => {
     
 };
 
+const deleteOrder = async (bookId) => {
+  await axios.delete(`http://localhost:1000/deleteOrder/${bookId}`, { headers });
+};
+
 const deleteItem = async (bookid) => {
   console.log('bookid',bookid)
   const response = await axios.put(
@@ -26,7 +30,7 @@ const deleteItem = async (bookid) => {
   );
   alert(response.data.message)
   setCollection(collection.filter((item) => item._id !== bookid));
-  
+  deleteOrder(bookid);
 };
 
 const handleRead = async () => {
@@ -42,34 +46,35 @@ useEffect(() => {
     const response = await axios.get("http://localhost:1000/getCollection", { headers });
     setCollection(response.data.data);
     
+    
   };
   return () => fetch();
 }, []);
 
-useEffect(() => {
-  const updateOrder = async () => {
-    if ( collection && collection.length > 0) {
-      // Clear existing orders
-      await axios.put(
-        'http://localhost:1000/clearOrders',
-        {},
-        { headers }
-      );
+// useEffect(() => {
+//   const updateOrder = async () => {
+//     if ( collection && collection.length > 0) {
+//       // Clear existing orders
+//       await axios.put(
+//         'http://localhost:1000/clearOrders',
+//         {},
+//         { headers }
+//       );
 
-      const orderData = collection.map(item => ({
-        book: item._id
-      }));
+//       const orderData = collection.map(item => ({
+//         book: item._id
+//       }));
 
-      await axios.post(
-        'http://localhost:1000/addOrder',
-        { order: orderData },
-        { headers }
-      );
-    }
-  };
+//       await axios.post(
+//         'http://localhost:1000/addOrder',
+//         { order: orderData },
+//         { headers }
+//       );
+//     }
+//   };
 
-  return () => updateOrder();
-}, [collection]);
+//   return () => updateOrder();
+// }, [collection]);
 
 
   return (
