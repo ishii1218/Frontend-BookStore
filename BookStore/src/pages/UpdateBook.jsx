@@ -1,10 +1,14 @@
 import React from 'react'
-import auth from '../store/auth'
 import { useState } from 'react';
 import axios from 'axios';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
-const AddBook = () => {
+const UpdateBook = () => {
+    const navigate =useNavigate();
+
+    const { id } = useParams();
     const [data, setData] = useState({
         url: '',
         title: '',
@@ -15,8 +19,11 @@ const AddBook = () => {
     });
     const headers = {
         id: localStorage.getItem('id'),
-        authorization:  `Bearer ${localStorage.getItem('token')}` ,   
+        authorization:  `Bearer ${localStorage.getItem('token')}` , 
+        bookid:id,  
     };
+
+
     const change =(e) =>{
         const {name, value} = e.target;
         setData({
@@ -35,11 +42,12 @@ const AddBook = () => {
             ){
                 alert('Please fill all the fields');
             } else{
-                const response = await axios.post(
-                    'http://localhost:1000/addBook', 
+                const response = await axios.put(
+                    'http://localhost:1000/updateBook', 
                     data, 
                     {headers}
                 );
+
                 
                 setData({
                     url: '',
@@ -50,17 +58,30 @@ const AddBook = () => {
                     language: '',
                 });
                 alert(response.data.message);
+                
+                navigate(`/book-details/${id}`);
             } 
         }catch (error) {
         alert(error.response.data.message);
         }
     }
 
+    useEffect(() => {
+        const fetch = async () => {
+            const response = await axios.get(
+                `http://localhost:1000/getBookById/${id}`
+            );
+            console.log('bookdetails', response);
+            setData(response.data.data);
+        };
+        fetch();
+    }, [id]);
+
 
   return (
-    <div className='h-[100%] lg:mr-10 p-0 md:p-10 md:pl-0 md:pt-0'>
+    <div className='h-[100%] bg-green-100 p-0 md:p-24  md:pt-20'>
         <h1 className='text-3xl md:text-5xl font-semibold text-[#08312a] mb-3'>
-            Add Book
+            Update Book
         </h1>
         <div className='p-4 px-8 pt-3 bg-[#08312a] rounded'>
             <div>
@@ -133,14 +154,14 @@ const AddBook = () => {
                 />
             </div>
             <button 
-                className='bg-[#096354] text-white px-3 py-1 font-semibold hover:text-green-200 hover:bg-[#0c493f] rounded-md mt-2'
+                className='bg-[#096354] text-white px-3 py-2 font-semibold hover:text-green-200 hover:bg-[#0c493f] rounded-md mt-4'
                 onClick={handleSubmit}
             >
-                Add Book
+                Update Book
             </button>
         </div>
     </div>
   )
 }
 
-export default AddBook
+export default UpdateBook

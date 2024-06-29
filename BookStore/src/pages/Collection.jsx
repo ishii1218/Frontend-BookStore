@@ -78,7 +78,7 @@ useEffect(() => {
 
 
   return (
-    <div className='mt-10 bg-green-100 px-12 md:h-screen h-[100%] py-8'>
+    <div className='mt-10 bg-green-100 px-12  h-[100%] py-8'>
     {!collection && (
       <div className='flex items-center justify-center my-8'>
         <Loader />{""}

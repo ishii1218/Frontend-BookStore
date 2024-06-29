@@ -18,6 +18,8 @@ import Status from './components/Profile/Status';
 import Settings from './components/Profile/Settings';
 import Summary from './pages/Summary';
 import AddBook from './pages/AddBook';
+import UpdateBook from './pages/UpdateBook';
+import BookStatus from './pages/BookStatus';
  
 
 const App = () => {
@@ -46,11 +48,13 @@ const App = () => {
           <Route  path="/about-us" element={<AboutUs />} />
           <Route  path="/collection" element={<Collection />} />
           <Route  path="/book-details/:id" element={<BookDetails />} />
+          <Route  path="/update-book/:id" element={<UpdateBook />} />
           <Route  path="/profile" element={<Profile />} >
             {role === 'user' ? <Route  index element={<Favorites />} /> 
               : <Route  index element={<Summary />} />
             }
             {role === 'admin' && <Route  path="/profile/addbook" element={<AddBook />} />}
+            <Route  path="/profile/bookstatus" element={<BookStatus />} />
             
             <Route  path="/profile/status" element={<Status />} />
             <Route  path="/profile/settings" element={<Settings />} />

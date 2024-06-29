@@ -84,7 +84,7 @@ const Sidebar = ({ data }) => {
                 )}
                 {role === 'admin' && (
                     <div className='mb-10 mt-4 '>
-                    <Link to='/profile/status'>
+                    <Link to='/profile/bookstatus'>
                     <ListItem className='hover:text-[#08312a] hidden md:flex mb-2'>
                         <ListItemPrefix>
                             <UserCircleIcon className="h-5 w-5" />

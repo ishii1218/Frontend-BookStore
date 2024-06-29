@@ -30,7 +30,7 @@ const BookCard = ({data,favourite }) => {
   return (
     <>
     
-    <div className='bg-gray-800 rounded p-2'>
+    <div className='bg-[#08312a] rounded p-2'>
       <Link to={`/book-details/${data._id}`}>
         <div className='flex justify-center '>
             <img src={data.url} alt="/" className='w-48 h-64 ' />
