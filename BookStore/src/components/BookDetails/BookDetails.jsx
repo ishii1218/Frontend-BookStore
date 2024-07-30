@@ -9,16 +9,20 @@ import { SiBookstack } from "react-icons/si";
 import { useSelector } from 'react-redux';
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import Toast from '../Toast/Toast';
 
 const BookDetails = () => {
     const [Data, setData] = useState();
     const navigate = useNavigate();
+    const [toast, setToast] = useState({ show: false, type: '', message: '' });
 
     const { id } = useParams();
     console.log('id', id);
 
     const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
     const role = useSelector((state) => state.auth.role);
+
+    
 
     useEffect(() => {
         const fetch = async () => {
@@ -40,13 +44,16 @@ const BookDetails = () => {
         const response = await axios.put(
            'http://localhost:1000/addFavourite',{},{headers}
         );
-        alert(response.data.message);
+        setToast({ show: true, type: 'success', message: response.data.message });
+        
+        // alert(response.data.message);
     };
     const handleCollection = async () => {
         const response = await axios.put(
            'http://localhost:1000/addToCart',{},{headers}
         );
-        alert(response.data.message);
+        setToast({ show: true, type: 'success', message: response.data.message });
+        // alert(response.data.message);
         console.log('response',response);
 
 
@@ -61,9 +68,14 @@ const BookDetails = () => {
         const response = await axios.delete(
            'http://localhost:1000/deleteBook',{headers}
         );
+        // setToast({ show: true, type: 'success', message: response.data.message });
         alert(response.data.message);
         navigate('/all-books');
     };
+
+    const closeToast = () => {
+        setToast({ show: false, type: '', message: '' });
+      };
 
     return (
         <>
@@ -80,11 +92,14 @@ const BookDetails = () => {
                                         <FaHeart />
                                         <span className='text-black  text-[24px] ms-2 block lg:hidden '>Favorites</span>
                                         </button>
+                                        {toast.show && <Toast type={toast.type} message={toast.message} onClose={closeToast} />}
                                     <button className='bg-green-100 rounded-sm lg:rounded-full item-center flex text-2xl mt-4 lg:text-3xl p-2 lg:mt-4 text-gray-900'
                                     onClick={handleCollection}>
                                         <SiBookstack />
                                         <span className='text-black text-[22px] ms-2 block lg:hidden '>Add to collection</span>
                                         </button>
+                                        {toast.show && <Toast type={toast.type} message={toast.message} onClose={closeToast} />}
+
                                 </div>
                             )}
 
@@ -102,6 +117,7 @@ const BookDetails = () => {
                                         <MdDelete />
                                         <span className='text-black text-[20px]  md:text-[22px] ms-2 block lg:hidden '>Delete Book</span>
                                     </button>
+                                    {toast.show && <Toast type={toast.type} message={toast.message} onClose={closeToast} />}
                                 </div>
                             )}
                        </div>
@@ -110,6 +126,7 @@ const BookDetails = () => {
                       <div className='lg:mt-12 mt-4 p-4 w-full lg:w-3/6'>
                           <h1 className='text-3xl font-bold text-teal-900/95'>{Data.title}</h1>
                           <p className='text-xl my-3 font-bold text-black'>by {Data.author}</p>
+                          <p className='text-xl my-3 font-bold text-black'><strong>Genre: </strong> {Data.genre}</p>
                           <p className='text-lg text-gray-800'>{Data.description}</p>
                           <p className='text-lg text-gray-900 items-center flex mt-4'>
                               <GrLanguage className='mr-2' />{Data.language}

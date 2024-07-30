@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import toast from './Toast'
 
 const SugnUp = () => {
 const [Values, setValues] =useState({
@@ -43,6 +44,8 @@ const change = (e) => {
       }
     }
     catch (error) {
+      toast.error(error.response.data.message);
+
     alert(error.response.data.message);
   }
 };

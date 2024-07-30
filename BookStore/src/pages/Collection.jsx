@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'; // Add this line to import Link
 import Loader from '../components/Loader/Loader'
 import axios from 'axios'
 import { MdDelete } from "react-icons/md";
@@ -33,12 +34,16 @@ const deleteItem = async (bookid) => {
   deleteOrder(bookid);
 };
 
-const handleRead = async () => {
-  // const response = await axios.put("http://localhost:1000/deleteFavourite",
-  //   {},
-  //   {headers}
-  // );
-  // alert(response.data.message)
+const handleRead = async (Id) => {
+  try {
+    const res = await axios.put(`http://localhost:1000/updateOrderStatus/${Id}`,
+      {status: 'Reading'},
+      { headers },
+      );
+      console.log('res',res);
+  } catch (err) {
+    console.error('Failed to start reading', err);
+  }
 };
 
 useEffect(() => {
@@ -132,12 +137,12 @@ useEffect(() => {
               </div>
             </div>
             <div className='flex gap-2 lg:gap-4'>
-              <button 
+              <Link to={`/start-reading/${items._id}`} 
               className='bg-gray-900/90 text-white hover:text-green-200 hover:bg-gray-900/50 text-sm p-2 rounded-md'
               onClick={() => handleRead(items._id)}
               >
                 Start Reading
-              </button>
+              </Link>
               <button className='bg-green-100 text-red-900 p-1 rounded-sm h-8 w-8 flex items-center justify-center hover:bg-red-900 hover:text-white'
 
               onClick={() => deleteItem(items._id)}

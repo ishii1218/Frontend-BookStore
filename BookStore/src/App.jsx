@@ -20,6 +20,8 @@ import Summary from './pages/Summary';
 import AddBook from './pages/AddBook';
 import UpdateBook from './pages/UpdateBook';
 import BookStatus from './pages/BookStatus';
+import StartReading from './pages/StartReading';
+import Payement from './components/Payment/Payment';
  
 
 const App = () => {
@@ -49,6 +51,8 @@ const App = () => {
           <Route  path="/collection" element={<Collection />} />
           <Route  path="/book-details/:id" element={<BookDetails />} />
           <Route  path="/update-book/:id" element={<UpdateBook />} />
+          <Route path="/payement" element={<Payement />} />
+          <Route  path="/start-reading/:id" element={<StartReading />} />
           <Route  path="/profile" element={<Profile />} >
             {role === 'user' ? <Route  index element={<Favorites />} /> 
               : <Route  index element={<Summary />} />

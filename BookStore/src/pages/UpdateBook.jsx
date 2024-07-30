@@ -92,7 +92,7 @@ const UpdateBook = () => {
                     value={data.url}
                     onChange={change}
                     placeholder='Enter Image URL'
-                    className='w-full mt-1 p-2 border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
+                    className='w-full mt-1 p-1 border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
                 />
             </div>
             <div className='mt-3'>
@@ -103,7 +103,7 @@ const UpdateBook = () => {
                     value={data.title}
                     onChange={change}
                     placeholder='Enter Title'
-                    className='w-full mt-1 p-2 border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
+                    className='w-full mt-1 p- border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
                 />
             </div>
             <div className='mt-3'>
@@ -114,20 +114,25 @@ const UpdateBook = () => {
                     value={data.author}
                     onChange={change}
                     placeholder='Enter Author'
-                    className='w-full mt-1 p-2 border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
+                    className='w-full mt-1 p-1 border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
                 />
             </div>
             <div className='mt-3 flex gap-4'>
-                <div className='w-3/6'>
-                    <label htmlFor='price' className='text-green-100'>Price</label>
-                    <input
-                        type='number'
-                        name='price'
-                        value={data.price}
-                        onChange={change}
-                        placeholder='Enter Price'
-                        className='w-full mt-1 p-2 border bg-green-100 text-gray-900 outline-none border-gray-100 rounded-sm'
-                    />
+            <div >
+                <label htmlFor='genre' className='text-green-100'>Genre</label>
+                <select
+                    id="genre"
+                    name="genre"
+                    value={data.genre}
+                    className="w-full mt-1 p-1.5 border bg-green-100 text-gray-900 border-gray-300 rounded-sm outline-none"
+                    onChange={change}
+                >
+                    <option value="">Choose a genre</option>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Non-Fiction">Non-Fiction</option>
+                    <option value="Novel">Novel</option>
+                    <option value="Science">Science</option>
+                </select>
                 </div>
                 <div className='w-3/6'>
                     <label htmlFor='language' className='text-green-100'>Language</label>
@@ -138,7 +143,7 @@ const UpdateBook = () => {
                         onChange={change}
                         required
                         placeholder='Enter Language'
-                        className='w-full mt-1 p-2 border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
+                        className='w-full mt-1 p-1 border bg-green-100 text-gray-900 border-gray-300 rounded-sm'
                     />
                 </div>
             </div>

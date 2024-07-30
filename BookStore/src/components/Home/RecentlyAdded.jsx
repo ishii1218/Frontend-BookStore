@@ -30,7 +30,7 @@ const RecentlyAdded = () => {
           
           )}
 
-             <div className='mt-4  grid grid-cols-1 sm:grid-cols-4 gap-4'>
+             <div className='mt-4  grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5  gap-4'>
               {Data && Data.map((items,i) => 
               <div key={i}>
                 <BookCard data={items} />{" "}

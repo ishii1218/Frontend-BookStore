@@ -4,6 +4,8 @@ import { authActions } from '../store/auth';
 import { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
+import Toast from '../components/Toast/Toast';
+
 
 const Login = () => {
   const [Values, setValues] =useState({
@@ -11,6 +13,7 @@ const Login = () => {
     password: '',
     
   })
+  const [toast, setToast] = useState({ show: false, type: '', message: '' });
   
   const navigate = useNavigate();
 
@@ -30,7 +33,10 @@ const Login = () => {
         if (Values.username === "" ||
            Values.password ==="") 
           {
-          alert('All fields are required')
+            
+          setToast({ show: true, type: 'warning', message: 'All fields are required' });
+          // alert('All fields are required')
+
           }
         else {
           const response = await axios.post(
@@ -43,12 +49,19 @@ const Login = () => {
         localStorage.setItem('id', response.data.id);
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('role', response.data.role);
+        setToast({ show: true, type: 'success', message: "SignIn Successful" });
+        <Toast type={toast.type} message={toast.message} onClose={closeToast}  />
         navigate('/profile')
         }
       }
       catch (error) {
-      alert(error.response.data.message);
+        setToast({ show: true, type: 'error', message: error.response.data.message });
+      // alert(error.response.data.message);
     }
+  };
+
+  const closeToast = () => {
+    setToast({ show: false, type: '', message: '' });
   };
   return (
     <div className="font-[sans-serif] text-[#333] mt-10 flex items-center justify-center min-h-screen bg-green-100/70">
@@ -108,6 +121,8 @@ const Login = () => {
                 <button type="button" className="w-full bg-teal-900/90 shadow-xl py-2.5 px-4 text-sm font-semibold rounded text-white bg-[#333] hover:bg-teal-800 focus:outline-none" onClick={submit}>
                   Log in
                 </button>
+                
+                {toast.show && <Toast type={toast.type} message={toast.message} onClose={closeToast}  />}
               </div>
               <p className="text-sm !mt-10 text-center">Dont have an account <a href="javascript:void(0);" className="text-green-800 hover:underline ml-1 whitespace-nowrap">Register here</a></p>
             </form>
