@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import {
   Navbar,
   Collapse,
@@ -21,7 +21,9 @@ import {
   Bars3Icon,
   BookOpenIcon,
 } from "@heroicons/react/24/solid";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { authActions } from '../../store/auth';
+
 
 // Profile menu component
 const profileMenuItems = [
@@ -30,31 +32,34 @@ const profileMenuItems = [
     icon: UserCircleIcon,
     link: "/profile",
   },
-  {
-    label: "Edit Profile",
-    icon: Cog6ToothIcon,
-    link: "/edit-profile",
-  },
-  {
-    label: "Inbox",
-    icon: InboxArrowDownIcon,
-    link: "/inbox",
-  },
-  {
-    label: "Help",
-    icon: LifebuoyIcon,
-    link: "/help",
-  },
+  // {
+  //   label: "Edit Profile",
+  //   icon: Cog6ToothIcon,
+  //   link: "/edit-profile",
+  // },
+  // {
+  //   label: "Inbox",
+  //   icon: InboxArrowDownIcon,
+  //   link: "/inbox",
+  // },
+  // {
+  //   label: "Help",
+  //   icon: LifebuoyIcon,
+  //   link: "/help",
+  // },
   {
     label: "Sign Out",
     icon: PowerIcon,
-    link: "/sign-out",
+    link: "/",
   },
 ];
 
 
 
 function ProfileMenu() {
+  const dispatch = useDispatch();
+  const history = useNavigate();
+
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   console.log(isLoggedIn);
@@ -65,6 +70,8 @@ function ProfileMenu() {
 
   if(!isLoggedIn) 
     return null;
+
+
 
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-start">
@@ -88,16 +95,24 @@ function ProfileMenu() {
                 window.location.href = link;
               }}
               className={`flex items-center gap-2 ${
-                isLastItem ? "hover:bg-transparent focus:bg-red-500/10" : ""
+                isLastItem ? "hover:bg-transparent hover:bg-red-100 focus:bg-red-500/10" : ""
               }`}
             >
               {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                className: `h-4 w-4 ${isLastItem ? "text-red-500 " : ""}`,
                 strokeWidth: 2,
               })}
               <Typography
                 as="span"
-                href={link}
+                onClick={() => {
+                  dispatch(authActions.logout());
+                  dispatch(authActions.changeRole('user'));
+                  localStorage.clear('id');
+                  localStorage.clear('token');
+                  localStorage.clear('role');
+                  history('/');
+
+                }}
                 variant="small"
                 className="font-normal"
                 color={isLastItem ? "red" : "inherit"}

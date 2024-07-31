@@ -1,10 +1,31 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 const Pricing = () => {
   const [plan, setPlan] = useState('monthly');
 
+  const headers = {
+    id: localStorage.getItem('id'),
+    authorization:  `Bearer ${localStorage.getItem('token')}`
+  };
+
   const switchPlan = (plan) => {
     setPlan(plan);
+  };
+
+  const handleGetStarted = async (packageType) => {
+    try {
+      const response = await axios.put('http://localhost:1000/update-package',
+        {package:packageType},
+        { headers },
+        );
+      console.log('package response', response.data);
+      
+    } catch (error) {
+      console.error('Error updating package', error);
+    }
   };
 
   return (
@@ -35,7 +56,7 @@ const Pricing = () => {
             <div className="bg-white shadow rounded-3xl p-6 hover:scale-105 transition-all duration-300">
               <h4 className="text-gray-800 text-lg mb-3">Main</h4>
               <h3 className="text-4xl font-semibold ">
-                {plan === 'monthly' ? '$9.99' : '$99.99'}
+                {plan === 'monthly' ? 'Rs.9.99' : 'Rs.99.99'}
                 <sub className="text-gray-500 font-medium text-sm ml-1">/ {plan}</sub>
               </h3>
               <hr className="my-6 border-gray-300" />
@@ -65,14 +86,18 @@ const Pricing = () => {
                    
                   </li>
                 </ul>
-                <button type="button" className="w-full mt-6 px-4 py-2 text-sm tracking-wide bg-[#08312a] hover:bg-teal-900 text-white rounded-xl">Get Started</button>
+                <Link to={`/login?type=main&plan=${plan}&amount=${plan === 'monthly' ? '9.99' : '99.99'}`}>
+                  <button onClick={() => handleGetStarted('main')} type="button" className="w-full mt-6 px-4 py-2 text-sm tracking-wide bg-[#08312a] hover:bg-teal-900 text-white rounded-xl">
+                    Get Started
+                  </button>
+                </Link>
               </div>
             </div>
 
             <div className="bg-white shadow rounded-3xl p-6 hover:scale-105 transition-all duration-300">
               <h4 className="text-gray-800 text-lg mb-3">Premium</h4>
               <h3 className="text-4xl font-semibold ">
-                {plan === 'monthly' ? '$19.99' : '$199.99'}
+                {plan === 'monthly' ? 'Rs.19.99' : 'Rs.199.99'}
                 <sub className="text-gray-500 font-medium text-sm ml-1">/ {plan}</sub>
               </h3>
               <hr className="my-6 border-gray-300" />
@@ -105,7 +130,11 @@ const Pricing = () => {
                     Access to exclusive book signings
                   </li>
                 </ul>
-                <button type="button" className="w-full mt-6 px-4 py-2 text-sm tracking-wide bg-[#08312a] hover:bg-teal-900 text-white rounded-xl">Get Started</button>
+                 <Link to={`/login?type=premium&plan=${plan}&amount=${plan === 'monthly' ? 'Rs 19.99' : 'Rs 199.99'}`}>
+                  <button onClick={() => handleGetStarted('premium')} type="button" className="w-full mt-6 px-4 py-2 text-sm tracking-wide bg-[#08312a] hover:bg-teal-900 text-white rounded-xl">
+                    Get Started
+                  </button>
+                </Link>
               </div>
             </div>
           </div>

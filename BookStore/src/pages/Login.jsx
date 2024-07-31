@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation, Link } from 'react-router-dom';
 import { authActions } from '../store/auth';
 import { useState } from 'react';
 import axios from 'axios';
@@ -8,6 +8,13 @@ import Toast from '../components/Toast/Toast';
 
 
 const Login = () => {
+
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const plan = params.get('plan');
+  const amount = params.get('amount');
+  const type = params.get('type')
   const [Values, setValues] =useState({
     username: '',
     password: '',
@@ -50,8 +57,9 @@ const Login = () => {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('role', response.data.role);
         setToast({ show: true, type: 'success', message: "SignIn Successful" });
-        <Toast type={toast.type} message={toast.message} onClose={closeToast}  />
-        navigate('/profile')
+        // <Toast type={toast.type} message={toast.message} onClose={closeToast}  />
+        
+        type ?  navigate(`/payement?type=${type}&plan=${plan}&amount=${amount}`) : navigate('/profile');
         }
       }
       catch (error) {
@@ -124,7 +132,11 @@ const Login = () => {
                 
                 {toast.show && <Toast type={toast.type} message={toast.message} onClose={closeToast}  />}
               </div>
-              <p className="text-sm !mt-10 text-center">Dont have an account <a href="javascript:void(0);" className="text-green-800 hover:underline ml-1 whitespace-nowrap">Register here</a></p>
+              <p className="text-sm !mt-10 text-center">Dont have an account? <a  className="text-green-800 hover:underline ml-1 whitespace-nowrap">
+                <Link to={'/signup'}>
+                  Create Account
+                </Link>
+              </a></p>
             </form>
           </div>
         </div>

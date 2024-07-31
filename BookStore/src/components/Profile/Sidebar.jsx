@@ -63,7 +63,7 @@ const Sidebar = ({ data }) => {
                             </ListItemSuffix>
                         </ListItem>
                     </Link>
-                    <ListItem className='hover:text-[#08312a] hidden md:flex'>
+                    {/* <ListItem className='hover:text-[#08312a] hidden md:flex'>
                         <ListItemPrefix>
                             <InboxIcon className="h-5 w-5" />
                         </ListItemPrefix>
@@ -71,7 +71,7 @@ const Sidebar = ({ data }) => {
                         <ListItemSuffix>
                             <Chip value="14" size="sm" variant="ghost" className="rounded-full text-green-100 bg-gray-900/80" />
                         </ListItemSuffix>
-                    </ListItem>
+                    </ListItem> */}
                     <Link to='/profile/settings'>
                             <ListItem className='hover:text-[#08312a] mb-10 hidden md:flex'>
                                 <ListItemPrefix>

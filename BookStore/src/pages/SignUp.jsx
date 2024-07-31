@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import toast from './Toast'
+import { Link, useNavigate } from 'react-router-dom'
+import toast from '../components/Toast/Toast'
 
 const SugnUp = () => {
 const [Values, setValues] =useState({
@@ -107,7 +107,11 @@ const change = (e) => {
               Create an account
             </button>
           </div>
-          <p className="text-sm mt-6 text-center">Already have an account? <a href="javascript:void(0);" className="text-green-800 font-semibold hover:underline ml-1">Login here</a></p>
+          <p className="text-sm mt-6 text-center">Already have an account? <a href="javascript:void(0);" className="text-green-800 font-semibold hover:underline ml-1">
+            <Link to={'/login'}>
+              Login here
+            </Link>
+          </a></p>
         </form>
       </div>
     </div>

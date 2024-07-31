@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 const Toast = ({ type, message, onClose }) => {
+  
    
   const iconDetails = {
     success: {
