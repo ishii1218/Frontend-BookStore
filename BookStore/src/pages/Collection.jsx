@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'; // Add this line to import Link
 import Loader from '../components/Loader/Loader'
 import axios from 'axios'
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdBook, MdPlayArrow, MdCheckCircle } from "react-icons/md";
 
 
 const Collection = () => {
@@ -17,6 +17,21 @@ const Collection = () => {
     authorization:  `Bearer ${localStorage.getItem('token')}` ,
     
 };
+
+// Fetch order history
+useEffect(() => {
+  const fetchOrderHistory = async () => {
+    try {
+      const response = await axios.get("http://localhost:1000/getOrderHistory", { headers });
+      setCollection(response.data.orders);
+      console.log('responseeee',response.data.orders)
+    } catch (error) {
+      console.error("Failed to fetch order history", error);
+    }
+  };
+
+  fetchOrderHistory();
+}, []);
 
 const deleteOrder = async (bookId) => {
   await axios.delete(`http://localhost:1000/deleteOrder/${bookId}`, { headers });
@@ -33,6 +48,7 @@ const deleteItem = async (bookid) => {
   setCollection(collection.filter((item) => item._id !== bookid));
   deleteOrder(bookid);
 };
+console.log('collection',collection)
 
 const handleRead = async (Id) => {
   try {
@@ -46,15 +62,16 @@ const handleRead = async (Id) => {
   }
 };
 
-useEffect(() => {
-  const fetch = async () => {
-    const response = await axios.get("http://localhost:1000/getCollection", { headers });
-    setCollection(response.data.data);
+// useEffect(() => {
+//   const fetch = async () => {
+//     const response = await axios.get("http://localhost:1000/getCollection", { headers });
+//     setCollection(response.data.data);
+//     console.log('response',response.data.data)
     
     
-  };
-  return () => fetch();
-}, []);
+//   };
+//   return () => fetch();
+// }, []);
 
 // useEffect(() => {
 //   const updateOrder = async () => {
@@ -81,6 +98,32 @@ useEffect(() => {
 //   return () => updateOrder();
 // }, [collection]);
 
+
+const getButtonContent = (status) => {
+  switch (status) {
+    case 'In Collection':
+      return { text: 'Start Reading', icon: <MdBook className='h-4 w-4' /> };
+    case 'Reading':
+      return { text: 'Continue Reading', icon: <MdPlayArrow  className='h-3 w-3'/> };
+    case 'Finished':
+      return { text: 'Done', icon: <MdCheckCircle className='h-4 w-4'/> };
+    default:
+      return { text: 'Unknown', icon: <MdBook className='h-4 w-4' /> };
+  }
+};
+
+const getButtonStyles = (status) => {
+  switch (status) {
+    case 'In Collection':
+      return 'bg-gray-500/90 text-black hover:bg-gray-700/50 hover:text-white';
+    case 'Reading':
+      return 'bg-blue-200/90 justify-center text-[#08312a] hover:bg-blue-900 hover:text-white';
+    case 'Finished':
+      return 'bg-green-400/90 text-[#08312a] hover:bg-green-900 hover:text-gray-200';
+    default:
+      return 'bg-green-200/90 text-black hover:bg-green-900 hover:text-green-200';
+  }
+};
 
   return (
     <div className='mt-10 bg-green-100 px-12  h-[100%] py-8'>
@@ -117,35 +160,35 @@ useEffect(() => {
             >
             <div className=' flex flex-col md:flex-row gap-3 items-center'>
               <img
-                src={items.url}
+                src={items.book.url}
                 alt='/'
                 className='h-[20vh] md:h-[10vh] object-cover'
               />
               <div className='w-full md:w-auto'>
                 <h1 className='text-2xl font-semibold text-start mt-2 md:mt-0 text-white'>
-                  {items.title}
+                  {items.book.title}
                 </h1>
                 <p className='text-normal text-green-100 mt-2 hidden lg:block'>
-                  {items.description.slice(0, 100)}...
+                  {items.book.description.slice(0, 100)}...
                 </p>
                 <p className='text-normal text-green-100 mt-2 hidden md:block lg:hidden'>
-                  {items.description.slice(0, 65)}...
+                  {items.book.description.slice(0, 65)}...
                 </p>
                 <p className='text-normal text-green-100 mt-2 block md:hidden'>
-                  {items.description.slice(0, 100)}...
+                  {items.book.description.slice(0, 100)}...
                 </p>
               </div>
             </div>
             <div className='flex gap-2 lg:gap-4'>
-              <Link to={`/start-reading/${items._id}`} 
-              className='bg-gray-900/90 text-white hover:text-green-200 hover:bg-gray-900/50 text-sm p-2 rounded-md'
-              onClick={() => handleRead(items._id)}
+              <Link to={`/start-reading/${items.book._id}`} 
+              className={`${getButtonStyles(items.status)} w-[130px] lg:w-[150px] font-bold flex items-center justify-center text-[12px] lg:text-sm p-1 rounded-md gap-1`}
+              onClick={() => handleRead(items.book._id)}
               >
-                Start Reading
+                {getButtonContent(items.status).icon} {getButtonContent(items.status).text}
               </Link>
               <button className='bg-green-100 text-red-900 p-1 rounded-sm h-8 w-8 flex items-center justify-center hover:bg-red-900 hover:text-white'
 
-              onClick={() => deleteItem(items._id)}
+              onClick={() => deleteItem(items.book._id)}
               >
               <MdDelete />
               </button>

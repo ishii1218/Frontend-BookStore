@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Document, Page } from 'react-pdf';
-import axios from 'axios';
-import { useParams,Link } from 'react-router-dom';
-import { SpeakerWaveIcon,CheckCircleIcon,InformationCircleIcon   } from '@heroicons/react/24/solid';
+import { useParams, Link } from 'react-router-dom';
+import { SpeakerWaveIcon, CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Popover, Dialog } from '@headlessui/react';
+import axios from 'axios';
 
 const headers = {
   id: localStorage.getItem('id'),
@@ -15,20 +14,34 @@ const StartReading = () => {
   const [isPremium, setIsPremium] = useState(false);
   const [isFinishedModalOpen, setIsFinishedModalOpen] = useState(false);
   const [rating, setRating] = useState(0);
+  const [bookDetails, setBookDetails] = useState({ title: '', author: '', description: '' });
 
   useEffect(() => {
     // Fetch user profile to check if the user is a premium member
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:1000/user-profile', { headers });
-        setIsPremium(response.data.isPremium); // Adjust this line according to your API response
+        const response = await axios.get('http://localhost:1000/user-information', { headers });
+        console.log('user profile', response.data);
+        setIsPremium(response.data.isPremium);
       } catch (error) {
         console.error('Failed to fetch user profile', error);
       }
     };
 
+    // Fetch book details
+    const fetchBookDetails = async () => {
+      try {
+        const response = await axios.get(`http://localhost:1000/getBookById/${id}`, { headers });
+        console.log('book details', response.data);
+        setBookDetails(response.data.data);
+      } catch (error) {
+        console.error('Failed to fetch book details', error);
+      }
+    };
+
     fetchProfile();
-  }, []);
+    fetchBookDetails();
+  }, [id]);
 
   const handleFinishReading = async () => {
     try {
@@ -39,9 +52,8 @@ const StartReading = () => {
       );
       console.log('res', res);
       setIsFinishedModalOpen(true);
-
     } catch (err) {
-      console.error('Failed to start reading', err);
+      console.error('Failed to finish reading', err);
     }
   };
 
@@ -50,59 +62,54 @@ const StartReading = () => {
   };
 
   return (
-    <div className='mt-12 bg-green-100'>
-      <div className='p-4 pb-20'>
-        <h1 className='text-start pl-6 font-bold pt-4 text-2xl'>Start Reading</h1>
-        <div className='w-4/5 md:w-3/5 mx-auto p-5'>
+    <div className="mt-12 bg-green-100">
+      <div className="p-4 pb-20">
+        <div className="text-start pl-6 pt-4">
+          <h1 className="text-3xl font-bold text-green-900">Read <medium className='text-[#08312a]'>{bookDetails.title}</medium></h1>
+          <h2 className="text-xl text-green-900 mt-2">by <medium className='font-bold text-[#08312a]'>{bookDetails.author}</medium> </h2>
+        </div>
+        <div className="w-4/5 md:w-3/5 mx-auto p-5 bg-white shadow-lg rounded-lg mt-6">
           <iframe
             src='https://drive.google.com/file/d/1CB_Jee2ktPTXesZ3RwlNgfP5bUZ3CEMN/preview'
-            className='w-full h-[550px]'
+            className="w-full h-[550px] border"
           />
-       
-
-        {/* <div>
-            <Document file={pdfURL}>
-            <Page pageNumber={1} />
-            </Document>
-        </div> */}
-        <div className='flex justify-between space-x-4 mt-4'>
-
-
-        {isPremium ? (
-            <button
-              className='bg-blue-800 text-white  p-4 md:text-[18px]  lg:px-10  rounded-md hover:bg-blue-800 flex items-center'
-              onClick={() => console.log('Play audiobook')}
-            >
-              <SpeakerWaveIcon className='h-5 w-5 mr-2 ' />
-              Listen to Audiobook
-            </button>
-          ) : (
-            <Popover>
-              <Popover.Button className='bg-blue-900 text-white md:text-[18px]  p-4 px-2 lg:px-8 rounded-md hover:bg-blue-700 flex items-center'>
-                <SpeakerWaveIcon className='h-5 w-5 mr-2' />
+          <p className="mt-4 text-gray-700">{bookDetails.description}</p>
+          <div className="flex justify-between space-x-4 mt-4">
+            {isPremium ? (
+              <button
+                className="bg-blue-800 text-white p-4 md:text-[18px] lg:px-10 rounded-md hover:bg-blue-900 flex items-center"
+                onClick={() => console.log('Play audiobook')}
+              >
+                <SpeakerWaveIcon className="h-5 w-5 mr-2" />
                 Listen to Audiobook
-              </Popover.Button>
-              <Popover.Panel className='absolute z-10 mt-1 bg-white p-3 border rounded shadow-md flex items-start'>
-              <InformationCircleIcon className='h-6 w-6 text-blue-500 mr-2' />
-              <div>
-                  <p className='text-gray-800'>Subscribe for Premium to access the audiobook.</p>
-                  <Link to='/' className='text-blue-600 underline'>
-                    Get Premium
-                  </Link>
-                </div>
-              </Popover.Panel>
-            </Popover>
-          )}
-          <button
-            className='bg-green-900 flex items-center text-white md:text-[18px] p-4 lg:px-20 rounded-md hover:bg-green-700'
-            onClick={handleFinishReading}
-          >
-            <CheckCircleIcon className='h-5 w-5 mr-2' />
-            Finish reading
-          </button>
-
-          
-        </div> 
+              </button>
+            ) : (
+              <Popover className="relative">
+                <Popover.Button className="bg-blue-900 text-white md:text-[18px] p-4 px-2 lg:px-8 rounded-md hover:bg-blue-700 flex items-center">
+                  <SpeakerWaveIcon className="h-5 w-5 mr-2" />
+                  Listen to Audiobook
+                </Popover.Button>
+                <Popover.Panel className="absolute z-10 mt-2 bg-white p-3 border rounded shadow-md w-72">
+                  <div className="flex items-start">
+                    <InformationCircleIcon className="h-6 w-6 text-blue-500 mr-2" />
+                    <div>
+                      <p className="text-gray-800">Subscribe for Premium to access the audiobook.</p>
+                      <Link to="/" className="text-blue-600 underline">
+                        Get Premium
+                      </Link>
+                    </div>
+                  </div>
+                </Popover.Panel>
+              </Popover>
+            )}
+            <button
+              className="bg-green-900 flex items-center text-white md:text-[18px] p-4 lg:px-20 rounded-md hover:bg-green-700"
+              onClick={handleFinishReading}
+            >
+              <CheckCircleIcon className="h-5 w-5 mr-2" />
+              Finish Reading
+            </button>
+          </div>
         </div>
       </div>
       <Dialog open={isFinishedModalOpen} onClose={() => setIsFinishedModalOpen(false)}>
