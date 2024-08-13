@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Loader from '../components/Loader/Loader';
 import { Link } from 'react-router-dom';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const BookStatus = () => {
     const [data, setData] = useState([]);
@@ -12,7 +13,7 @@ const BookStatus = () => {
 
     useEffect(() => {
         const fetch = async () => {
-            const response = await axios.get('http://localhost:1000/getAllOrders', { headers });
+            const response = await axios.get(`${backendUrl}/getAllOrders`, { headers });
             console.log('bookstatus', response.data.data);
             setData(response.data.data);
         };

@@ -12,6 +12,8 @@ import {
     PresentationChartBarIcon,
     ShoppingBagIcon,
     UserCircleIcon,
+    ArrowTrendingUpIcon,
+    ChartBarIcon,
     Cog6ToothIcon,
     InboxIcon,
     PowerIcon,
@@ -84,10 +86,18 @@ const Sidebar = ({ data }) => {
                 )}
                 {role === 'admin' && (
                     <div className='mb-10 mt-4 '>
+                    <Link to='/profile'>
+                    <ListItem className='hover:text-[#08312a] hidden md:flex mb-2'>
+                        <ListItemPrefix>
+                            <ArrowTrendingUpIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Overview
+                    </ListItem>
+                    </Link>
                     <Link to='/profile/bookstatus'>
                     <ListItem className='hover:text-[#08312a] hidden md:flex mb-2'>
                         <ListItemPrefix>
-                            <UserCircleIcon className="h-5 w-5" />
+                            <ChartBarIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         Status
                     </ListItem>

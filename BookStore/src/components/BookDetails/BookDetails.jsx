@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import Toast from '../Toast/Toast';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const BookDetails = () => {
     const [Data, setData] = useState();
@@ -27,7 +28,7 @@ const BookDetails = () => {
     useEffect(() => {
         const fetch = async () => {
             const response = await axios.get(
-                `http://localhost:1000/getBookById/${id}`
+                `${backendUrl}/getBookById/${id}`
             );
             console.log('bookdetails', response);
             setData(response.data.data);
@@ -42,7 +43,7 @@ const BookDetails = () => {
     };
     const handleFavorite = async () => {
         const response = await axios.put(
-           'http://localhost:1000/addFavourite',{},{headers}
+           `${backendUrl}/addFavourite`,{},{headers}
         );
         setToast({ show: true, type: 'success', message: response.data.message });
         
@@ -50,7 +51,7 @@ const BookDetails = () => {
     };
     const handleCollection = async () => {
         const response = await axios.put(
-           'http://localhost:1000/addToCart',{},{headers}
+           `${backendUrl}/addToCart`,{},{headers}
         );
         setToast({ show: true, type: 'success', message: response.data.message });
         // alert(response.data.message);
@@ -58,7 +59,7 @@ const BookDetails = () => {
 
 
         await axios.post(
-            'http://localhost:1000/updateOrder', {},
+            `${backendUrl}/updateOrder`, {},
 
             { headers }
         );
@@ -66,7 +67,7 @@ const BookDetails = () => {
 
     const deleteBook = async () => {
         const response = await axios.delete(
-           'http://localhost:1000/deleteBook',{headers}
+           `${backendUrl}/deleteBook`,{headers}
         );
         // setToast({ show: true, type: 'success', message: response.data.message });
         alert(response.data.message);

@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import MobileNav from '../components/Profile/MobileNav'
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Profile = () => {
@@ -22,7 +23,7 @@ const Profile = () => {
   useEffect(() => {
       const fetch = async () => {
           const response = await axios.get(
-              `http://localhost:1000/user-information`,
+              `${backendUrl}/user-information`,
               {headers}
           );
           console.log('user', response);
@@ -34,7 +35,7 @@ const Profile = () => {
     
 
   return (
-    <div className='mt-10 bg-green-200 px-0 md:px-5 flex flex-col md:flex-row h-full pt-12 pb-0 gap-6'>
+    <div className='mt-10 bg-green-50 px-0 md:px-5 flex flex-col md:flex-row h-full pt-12 pb-0 gap-6'>
       {!Profile && <div className='w-full h-[100%] flex items-center justify-center'>
         Loading...</div>}
       {Profile && (

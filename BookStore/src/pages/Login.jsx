@@ -5,6 +5,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import Toast from '../components/Toast/Toast';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Login = () => {
@@ -47,7 +48,7 @@ const Login = () => {
           }
         else {
           const response = await axios.post(
-            'http://localhost:1000/login',
+            `${backendUrl}/login`,
             Values
         );
         console.log(response.data);

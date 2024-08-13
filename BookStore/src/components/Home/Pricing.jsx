@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Pricing = () => {
@@ -17,7 +18,7 @@ const Pricing = () => {
 
   const handleGetStarted = async (packageType) => {
     try {
-      const response = await axios.put('http://localhost:1000/update-package',
+      const response = await axios.put(`${backendUrl}/update-package`,
         {package:packageType},
         { headers },
         );

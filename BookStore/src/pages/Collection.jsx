@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'; // Add this line to import Link
 import Loader from '../components/Loader/Loader'
 import axios from 'axios'
 import { MdDelete, MdBook, MdPlayArrow, MdCheckCircle } from "react-icons/md";
-
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Collection = () => {
 
@@ -22,7 +22,7 @@ const Collection = () => {
 useEffect(() => {
   const fetchOrderHistory = async () => {
     try {
-      const response = await axios.get("http://localhost:1000/getOrderHistory", { headers });
+      const response = await axios.get(`${backendUrl}/getOrderHistory`, { headers });
       setCollection(response.data.orders);
       console.log('responseeee',response.data.orders)
     } catch (error) {
@@ -34,13 +34,13 @@ useEffect(() => {
 }, []);
 
 const deleteOrder = async (bookId) => {
-  await axios.delete(`http://localhost:1000/deleteOrder/${bookId}`, { headers });
+  await axios.delete(`${backendUrl}/deleteOrder/${bookId}`, { headers });
 };
 
 const deleteItem = async (bookid) => {
   console.log('bookid',bookid)
   const response = await axios.put(
-    `http://localhost:1000/deleteCart/${bookid}`,
+    `${backendUrl}/deleteCart/${bookid}`,
     {},
     {headers}
   );
@@ -52,7 +52,7 @@ console.log('collection',collection)
 
 const handleRead = async (Id) => {
   try {
-    const res = await axios.put(`http://localhost:1000/updateOrderStatus/${Id}`,
+    const res = await axios.put(`${backendUrl}/updateOrderStatus/${Id}`,
       {status: 'Reading'},
       { headers },
       );
@@ -64,7 +64,7 @@ const handleRead = async (Id) => {
 
 // useEffect(() => {
 //   const fetch = async () => {
-//     const response = await axios.get("http://localhost:1000/getCollection", { headers });
+//     const response = await axios.get(`${backendUrl}/getCollection`, { headers });
 //     setCollection(response.data.data);
 //     console.log('response',response.data.data)
     
@@ -78,7 +78,7 @@ const handleRead = async (Id) => {
 //     if ( collection && collection.length > 0) {
 //       // Clear existing orders
 //       await axios.put(
-//         'http://localhost:1000/clearOrders',
+//         `${backendUrl}/clearOrders`,
 //         {},
 //         { headers }
 //       );
@@ -88,7 +88,7 @@ const handleRead = async (Id) => {
 //       }));
 
 //       await axios.post(
-//         'http://localhost:1000/addOrder',
+//         `${backendUrl}/addOrder`,
 //         { order: orderData },
 //         { headers }
 //       );

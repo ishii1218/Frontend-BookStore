@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { SpeakerWaveIcon, CheckCircleIcon, InformationCircleIcon } from '@heroicons/react/24/solid';
 import { Popover, Dialog } from '@headlessui/react';
 import axios from 'axios';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const headers = {
   id: localStorage.getItem('id'),
@@ -20,7 +21,7 @@ const StartReading = () => {
     // Fetch user profile to check if the user is a premium member
     const fetchProfile = async () => {
       try {
-        const response = await axios.get('http://localhost:1000/user-information', { headers });
+        const response = await axios.get(`${backendUrl}/user-information`, { headers });
         console.log('user profile', response.data);
         setIsPremium(response.data.isPremium);
       } catch (error) {
@@ -31,7 +32,7 @@ const StartReading = () => {
     // Fetch book details
     const fetchBookDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:1000/getBookById/${id}`, { headers });
+        const response = await axios.get(`${backendUrl}/getBookById/${id}`, { headers });
         console.log('book details', response.data);
         setBookDetails(response.data.data);
       } catch (error) {
@@ -46,7 +47,7 @@ const StartReading = () => {
   const handleFinishReading = async () => {
     try {
       const res = await axios.put(
-        `http://localhost:1000/updateOrderStatus/${id}`,
+        `${backendUrl}/updateOrderStatus/${id}`,
         { status: 'Finished' },
         { headers }
       );

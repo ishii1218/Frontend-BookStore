@@ -2,6 +2,7 @@ import {React,useEffect, useState } from 'react'
 import { useLocation, useNavigate} from 'react-router-dom';
 import axios from 'axios'
 import Toast from '../Toast/Toast'
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const Payement = () => {
@@ -24,7 +25,7 @@ const [toast, setToast] = useState({ show: false, type: '', message: '' });
 useEffect(() => {
   const fetch = async () => {
     try {
-      const response = await axios.get('http://localhost:1000/user-information', { headers });
+      const response = await axios.get(`${backendUrl}/user-information`, { headers });
       console.log('userPayment', response);
       setProfile(response.data);
     } catch (error) {

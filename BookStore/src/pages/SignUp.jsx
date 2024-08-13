@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import toast from '../components/Toast/Toast'
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const SugnUp = () => {
 const [Values, setValues] =useState({
@@ -36,7 +37,7 @@ const change = (e) => {
       }
       else {
         const response = await axios.post(
-          'http://localhost:1000/signup',
+          `${backendUrl}/signup`,
           Values
       );
       alert(response.data.message);
@@ -44,7 +45,8 @@ const change = (e) => {
       }
     }
     catch (error) {
-      toast.error(error.response.data.message);
+      alert(error.response.data.message);
+      // toast.error(error.response.data.message);
 
     alert(error.response.data.message);
   }

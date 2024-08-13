@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
 import { Link  } from 'react-router-dom';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const BookCard = ({data,favourite }) => {
     // console.log('bookcardData',data);
@@ -13,7 +14,7 @@ const BookCard = ({data,favourite }) => {
       
   };
     const handleRemoneFavourite = async () => {
-      const response = await axios.put("http://localhost:1000/deleteFavourite",
+      const response = await axios.put(`${backendUrl}/deleteFavourite`,
         {},
         {headers}
       );

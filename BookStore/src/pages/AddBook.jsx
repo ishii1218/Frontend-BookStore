@@ -2,6 +2,7 @@ import React from 'react'
 import auth from '../store/auth'
 import { useState } from 'react';
 import axios from 'axios';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 
 const AddBook = () => {
@@ -37,7 +38,7 @@ const AddBook = () => {
                 alert('Please fill all the fields');
             } else{
                 const response = await axios.post(
-                    'http://localhost:1000/addBook', 
+                    `${backendUrl}/addBook`, 
                     data, 
                     {headers}
                 );

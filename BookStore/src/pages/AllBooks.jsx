@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import BookCard from '../components/BookCard/BookCard';
 import Loader from '../components/Loader/Loader';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 import {
 MagnifyingGlassIcon
 } from "@heroicons/react/24/solid";
@@ -15,7 +16,7 @@ const AllBooks = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const response = await axios.get('http://localhost:1000/getAllBooks');
+        const response = await axios.get(`${backendUrl}/getAllBooks`);
         console.log(response);
         const books = response.data.data;
         setData(books);
@@ -87,7 +88,7 @@ const AllBooks = () => {
             </div>
           ))
         ) : (
-          <p className='text-gray-600'>No books found for "{searchQuery}".</p>
+          <p className='text-gray-600'>No books found for {searchQuery}.</p>
         )}
       </div>
     </div>

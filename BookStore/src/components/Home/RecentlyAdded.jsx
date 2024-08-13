@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import BookCard from '../BookCard/BookCard';
 import Loader from '../Loader/Loader';
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const RecentlyAdded = () => {
 
@@ -10,7 +11,7 @@ const RecentlyAdded = () => {
   useEffect(() => {
       const fetch = async () => {
           const response = await axios.get(
-              'http://localhost:1000/getRecentBooks'
+              `${backendUrl}/getRecentBooks`
           );
           console.log(response);
           setData(response.data.data);
