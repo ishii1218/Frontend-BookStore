@@ -134,11 +134,11 @@ const navListItems = [
   },
   {
     label: "About Us",
-    link: "/about-us",
+    link: "/aboutus",
   },
   {
     label: "All Books",
-    link: "/all-books",
+    link: "/allbooks",
   },
  
 ];

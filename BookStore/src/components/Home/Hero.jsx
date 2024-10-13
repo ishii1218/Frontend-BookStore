@@ -44,7 +44,7 @@ const Hero = () => {
             </p>
             <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
               <Link 
-                to="/all-books"
+                to="/allbooks"
                 className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:text-green-100 hover:bg-gray-900/80 "
               >
                 Discover more

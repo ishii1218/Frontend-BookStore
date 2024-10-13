@@ -71,7 +71,7 @@ const BookDetails = () => {
         );
         // setToast({ show: true, type: 'success', message: response.data.message });
         alert(response.data.message);
-        navigate('/all-books');
+        navigate('/allbooks');
     };
 
     const closeToast = () => {

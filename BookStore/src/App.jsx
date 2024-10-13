@@ -44,10 +44,10 @@ const App = () => {
         <Navibar />
         <Routes>
           <Route  path="/" element={<Home />} />
-          <Route  path="/all-books" element={<AllBooks />} />
+          <Route  path="/allbooks" element={<AllBooks />} />
           <Route  path="/login" element={<Login />} />
           <Route  path="/signup" element={<SignUp />} /> 
-          <Route  path="/about-us" element={<AboutUs />} />
+          <Route  path="/aboutus" element={<AboutUs />} />
           <Route  path="/collection" element={<Collection />} />
           <Route  path="/book-details/:id" element={<BookDetails />} />
           <Route  path="/update-book/:id" element={<UpdateBook />} />
