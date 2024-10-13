@@ -38,11 +38,10 @@ const Hero = () => {
               </svg>
             </a>
             <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-green-200 lg:text-5xl dark:text-white">
-              We invest in the world’s potential
+            Join today and embark on a new literary adventure!
             </h1>
             <p className="mb-8 text-lg font-normal text-green-100/70 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">
-              Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value
-              and drive economic growth.
+            Get expertly curated books delivered monthly. From thrillers to romance, we pick the best just for you.
             </p>
             <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
               <Link 
