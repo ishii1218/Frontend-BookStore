@@ -89,37 +89,41 @@ function ProfileMenu() {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
-              key={label}
-              onClick={() => {
-                closeMenu();
-                window.location.href = link;
-              }}
-              className={`flex items-center gap-2 ${
-                isLastItem ? "hover:bg-transparent hover:bg-red-100 focus:bg-red-500/10" : ""
-              }`}
+            key={label}
+            onClick={() => {
+              closeMenu();
+              if (label === "Sign Out") {
+                // Only log out if the "Sign Out" option is clicked
+                dispatch(authActions.logout());
+                dispatch(authActions.changeRole("user"));
+                localStorage.clear("id");
+                localStorage.clear("token");
+                localStorage.clear("role");
+                history("/");
+              } else {
+                // For other items, navigate to the appropriate link
+                history(link);
+              }
+            }}
+            className={`flex items-center gap-2 ${
+              isLastItem
+                ? "hover:bg-transparent hover:bg-red-100 focus:bg-red-500/10"
+                : ""
+            }`}
+          >
+            {React.createElement(icon, {
+              className: `h-4 w-4 ${isLastItem ? "text-red-500 " : ""}`,
+              strokeWidth: 2,
+            })}
+            <Typography
+              as="span"
+              variant="small"
+              className="font-normal"
+              color={isLastItem ? "red" : "inherit"}
             >
-              {React.createElement(icon, {
-                className: `h-4 w-4 ${isLastItem ? "text-red-500 " : ""}`,
-                strokeWidth: 2,
-              })}
-              <Typography
-                as="span"
-                onClick={() => {
-                  dispatch(authActions.logout());
-                  dispatch(authActions.changeRole('user'));
-                  localStorage.clear('id');
-                  localStorage.clear('token');
-                  localStorage.clear('role');
-                  history('/');
-
-                }}
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
+              {label}
+            </Typography>
+          </MenuItem>
           );
         })}
       </MenuList>
