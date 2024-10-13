@@ -13,11 +13,15 @@ const BookStatus = () => {
 
     useEffect(() => {
         const fetch = async () => {
-            const response = await axios.get(`${backendUrl}/getAllOrders`, { headers });
-            console.log('bookstatus', response.data.data);
-            setData(response.data.data);
+            try {
+                const response = await axios.get(`${backendUrl}/getAllOrders`, { headers });
+                console.log('bookstatus', response.data.data);
+                setData(response.data.data);
+            } catch (error) {
+                console.error('Failed to fetch book status', error);
+            }
         };
-        return () => fetch();
+        fetch();
     }, []);
 
     const groupByUser = (data) => {
