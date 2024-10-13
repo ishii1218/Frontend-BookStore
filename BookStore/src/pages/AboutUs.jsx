@@ -1,5 +1,5 @@
 import React from 'react'
-import BookImage from '../Images/Bookimage.jpg'
+import BookImage from '../components/Images/Bookimage.jpg'
 
 const AboutUs = () => {
   return (

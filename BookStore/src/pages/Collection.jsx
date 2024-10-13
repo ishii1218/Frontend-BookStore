@@ -5,7 +5,7 @@ import Loader from '../components/Loader/Loader'
 import axios from 'axios'
 import { MdDelete, MdBook, MdPlayArrow, MdCheckCircle } from "react-icons/md";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
-import GroceryCart from '../Images/grocery-cart.png'
+import GroceryCart from '../components/Images/grocery-cart.png'
 
 const Collection = () => {
 

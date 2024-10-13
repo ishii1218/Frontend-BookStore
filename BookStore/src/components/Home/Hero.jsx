@@ -1,19 +1,20 @@
 // import React from 'react'
 import { Link } from "react-router-dom";
-import BookImage from "../../Images/Bookimage.jpg";
+import BookImage from "../Images/Bookimage.jpg";
 
 const Hero = () => {
     return (
       <div>
         <section
           className="lg:items-center mt-12  mx-auto flex-col lg-flex relative dark:bg-gray-900"
-          style={{
-            backgroundImage: {BookImage},
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            height: '65vh',
-          }}
+          // style={{
+          //   backgroundImage: {BookImage},
+          //   backgroundSize: 'cover',
+          //   backgroundPosition: 'center',
+          //   height: '65vh',
+          // }}
         >
+           <img src={BookImage} alt="Banner Image" className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black opacity-65"></div>
           <div className="relative py-12 px-4 mx-auto max-w-screen-xl text-center items-center py-16 px-12">
             <a
