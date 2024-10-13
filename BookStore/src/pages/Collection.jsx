@@ -5,6 +5,7 @@ import Loader from '../components/Loader/Loader'
 import axios from 'axios'
 import { MdDelete, MdBook, MdPlayArrow, MdCheckCircle } from "react-icons/md";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
+import GroceryCart from '../Images/grocery-cart.png'
 
 const Collection = () => {
 
@@ -140,7 +141,7 @@ const getButtonStyles = (status) => {
           No Books in Collection
           </h1>
           <img
-            src='\Images\grocery-cart.png'
+            src={GroceryCart}
             alt='empty'
             className=' h-96 w-96 mt-8'
             

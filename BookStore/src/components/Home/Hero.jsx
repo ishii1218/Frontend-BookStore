@@ -1,5 +1,6 @@
 // import React from 'react'
 import { Link } from "react-router-dom";
+import BookImage from "../../Images/Bookimage.jpg";
 
 const Hero = () => {
     return (
@@ -7,7 +8,7 @@ const Hero = () => {
         <section
           className="lg:items-center mt-12  mx-auto flex-col lg-flex relative dark:bg-gray-900"
           style={{
-            backgroundImage: "url('Images/Bookimage.jpg')",
+            backgroundImage: {BookImage},
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '65vh',
